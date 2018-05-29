@@ -3,6 +3,8 @@
 * 練習 Apollo 串接 Graphql，及一些基本的 express 設定
 
 - 前後端為兩獨立專案，可以分別啟動
+  * client：`npm start` (localhost:3000)
+  * server：`node app` (localhost:4000)
 
 * 練習過程參考資料：
   * [GraphQL Full Course - Novice to Expert](https://www.youtube.com/watch?v=ed8SzALpx1Q)
