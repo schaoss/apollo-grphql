@@ -41,7 +41,6 @@ class AddBook extends Component {
       },
       refetchQueries: [{ query: getBooksQuery }],
     })
-    this.client.resetStore()
   }
 
   render() {
