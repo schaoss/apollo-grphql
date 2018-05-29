@@ -25,6 +25,13 @@ var books = [
   { name: 'The Colour of Magic', genre: 'Fantasy', id: '5', authorId: '3' },
   { name: 'The Light Fantastic', genre: 'Fantasy', id: '6', authorId: '3' },
 ]
+//取號機
+function* adder(i) {
+  var id = i
+  yield id++
+}
+const authorIdGen = adder(authors.length - 1)
+const bookIdGen = adder(books.length - 1)
 
 const AuthorType = new GraphQLObjectType({
   name: 'Author',
@@ -88,6 +95,43 @@ const RootQuery = new GraphQLObjectType({
   },
 })
 
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        authors.push({
+          name: args.name,
+          age: args.age,
+          id: authorIdGen.next().value,
+        })
+      },
+    },
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        authorId: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        books.push({
+          name: args.name,
+          genre: args.genre,
+          authorId: args.authorId,
+          id: bookIdGen.next().value,
+        })
+      },
+    },
+  },
+})
+
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation,
 })
