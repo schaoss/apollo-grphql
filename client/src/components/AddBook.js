@@ -35,10 +35,13 @@ class AddBook extends Component {
     e.preventDefault()
     this.props.addBookMutation({
       variables: {
-        ...this.state,
+        name: this.state.name,
+        genre: this.state.genre,
+        authorId: this.state.authorId,
       },
       refetchQueries: [{ query: getBooksQuery }],
     })
+    this.client.resetStore()
   }
 
   render() {

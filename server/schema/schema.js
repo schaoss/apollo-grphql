@@ -30,7 +30,6 @@ function* adder(i) {
   var id = i
   while (id < id + 1) yield ++id
 }
-const authorIdGen = adder(authors.length)
 const bookIdGen = adder(books.length)
 
 const AuthorType = new GraphQLObjectType({
@@ -99,20 +98,6 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addAuthor: {
-      type: AuthorType,
-      args: {
-        name: { type: GraphQLString },
-        age: { type: GraphQLInt },
-      },
-      resolve(parent, args) {
-        authors.push({
-          name: args.name,
-          age: args.age,
-          id: authorIdGen.next().value,
-        })
-      },
-    },
     addBook: {
       type: BookType,
       args: {
@@ -127,6 +112,7 @@ const Mutation = new GraphQLObjectType({
           authorId: args.authorId,
           id: bookIdGen.next().value,
         })
+        return books
       },
     },
   },
