@@ -12,26 +12,26 @@ const {
 } = graphql
 
 // dummy data
-var authors = [
+const authors = [
   { name: 'Patrick Rothfuss', age: 44, id: '1' },
   { name: 'Brandon Sanderson', age: 42, id: '2' },
   { name: 'Terry Pratchett', age: 66, id: '3' },
 ]
-var books = [
+const books = [
   { name: 'Name of the Wind', genre: 'Fantasy', id: '1', authorId: '1' },
   { name: 'The Final Empire', genre: 'Fantasy', id: '2', authorId: '2' },
-  { name: 'The Hero of Ages', genre: 'Fantasy', id: '4', authorId: '2' },
   { name: 'The Long Earth', genre: 'Sci-Fi', id: '3', authorId: '3' },
+  { name: 'The Hero of Ages', genre: 'Fantasy', id: '4', authorId: '2' },
   { name: 'The Colour of Magic', genre: 'Fantasy', id: '5', authorId: '3' },
   { name: 'The Light Fantastic', genre: 'Fantasy', id: '6', authorId: '3' },
 ]
 //取號機
 function* adder(i) {
   var id = i
-  yield id++
+  while (id < id + 1) yield ++id
 }
-const authorIdGen = adder(authors.length - 1)
-const bookIdGen = adder(books.length - 1)
+const authorIdGen = adder(authors.length)
+const bookIdGen = adder(books.length)
 
 const AuthorType = new GraphQLObjectType({
   name: 'Author',
@@ -70,6 +70,7 @@ const RootQuery = new GraphQLObjectType({
       type: BookType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
+        console.log(args)
         return _.find(books, { id: args.id })
       },
     },
