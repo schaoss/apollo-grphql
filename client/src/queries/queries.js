@@ -28,6 +28,10 @@ const addBookMutation = gql`
     addBook(name: $name, genre: $genre, authorId: $authorId) {
       name
       id
+      author {
+        name
+        age
+      }
     }
   }
 `

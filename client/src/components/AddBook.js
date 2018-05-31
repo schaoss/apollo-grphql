@@ -39,7 +39,13 @@ class AddBook extends Component {
         genre: this.state.genre,
         authorId: this.state.authorId,
       },
-      refetchQueries: [{ query: getBooksQuery }],
+      update: (store, { data: { addBook } }) => {
+        // store : local cache
+        // addBook : server\schema\schema.js
+        const data = store.readQuery({ query: getBooksQuery })
+        data.books.push(addBook)
+        store.writeQuery({ query: getBooksQuery, data })
+      },
     })
   }
 

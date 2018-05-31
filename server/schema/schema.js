@@ -106,13 +106,14 @@ const Mutation = new GraphQLObjectType({
         authorId: { type: GraphQLID },
       },
       resolve(parent, args) {
-        books.push({
+        const newBook = {
           name: args.name,
           genre: args.genre,
           authorId: args.authorId,
           id: bookIdGen.next().value,
-        })
-        return books
+        }
+        books.push(newBook)
+        return newBook
       },
     },
   },
