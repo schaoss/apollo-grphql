@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
-import ApolloClient from 'apollo-boost'
+import ApolloClient from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
+import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import BookList from './components/BookList'
 import AddBook from './components/AddBook'
 
+const link = new HttpLink({
+  uri: 'http://127.0.0.1:4000/graphql',
+  credentials: 'same-origin',
+})
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  //uri: 'http://localhost:4000/graphql',
+  link,
   cache: new InMemoryCache(),
 })
 
